@@ -1,0 +1,37 @@
+name: Sync Traduora Translations
+
+on:
+  workflow_dispatch: # Manual trigger from GitHub UI
+  schedule:
+    - cron: '0 9 * * *' # Optional: auto-run daily at 9 AM UTC
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Sync translations from Traduora
+        env:
+          TRADUORA_PROJECT_ID: ${{ secrets.TRADUORA_PROJECT_ID }}
+          TRADUORA_CLIENT_ID: ${{ secrets.TRADUORA_CLIENT_ID }}
+          TRADUORA_CLIENT_SECRET: ${{ secrets.TRADUORA_CLIENT_SECRET }}
+        run: pnpm dlx traduora-export
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add messages/
+          git commit -m "chore: sync translations from Traduora" || echo "No changes"
+          git push
