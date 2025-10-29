@@ -5,7 +5,7 @@
   },
   "IndexPage": {
     "description": "This is a basic example that demonstrates the usage of <code>next-intl</code> with the Next.js App Router. Try changing the locale in the top right corner and see how the content changes.",
-    "newMessage": "This is the message after github action successful.",
+    "newMessage": "This message is after generating traduora config file dynamically on github actions. ",
     "title": "next-intl example"
   },
   "LocaleLayout": {
