@@ -27,6 +27,17 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Generate Traduora config
+        run: |
+          echo "host: https://translations.oneterrace.jp" > traduora-export.yaml
+          echo "projectId: ${{ secrets.TRADUORA_PROJECT_ID }}" >> traduora-export.yaml
+          echo "clientId: ${{ secrets.TRADUORA_CLIENT_ID }}" >> traduora-export.yaml
+          echo "clientSecret: ${{ secrets.TRADUORA_CLIENT_SECRET }}" >> traduora-export.yaml
+          echo "locales:" >> traduora-export.yaml
+          echo "  - ja" >> traduora-export.yaml
+          echo "  - en" >> traduora-export.yaml
+          echo "outputDir: messages" >> traduora-export.yaml
+
       - name: Sync translations from Traduora
         env:
           TRADUORA_PROJECT_ID: ${{ secrets.TRADUORA_PROJECT_ID }}
@@ -36,6 +47,9 @@ jobs:
           pnpm dlx traduora-export
           ls -l messages/
           cat messages/en.json | grep newMessage || echo "Key not found"
+
+      - name: Cleanup
+        run: rm traduora-export.yaml
 
       - name: Commit and push changes
         run: |
