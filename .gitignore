@@ -8,4 +8,3 @@ tsconfig.tsbuildinfo
 out
 messages/en.d.json.ts
 .env.local
-traduora-export.yaml
