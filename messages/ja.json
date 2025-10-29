@@ -43,5 +43,8 @@
   "PathnamesPage": {
     "description": "<p>パス名も国際化されています。</p><p>デフォルト言語の英語を使用している場合、このページのブラウザアドレスバーに<code>/en/pathnames</code>が表示されます。</p><p>ロケールをドイツ語に変更すると、URLはそれに応じてローカライズされます（<code>/de/pfadnamen</code>）。</p>",
     "title": "パス名"
+  },
+  "Test": {
+    " newTerm": "Jp-New Term"
   }
 }
