@@ -29,14 +29,16 @@ jobs:
 
       - name: Generate Traduora config
         run: |
-          echo "host: https://translations.oneterrace.jp" > traduora-export.yaml
-          echo "projectId: ${{ secrets.TRADUORA_PROJECT_ID }}" >> traduora-export.yaml
-          echo "clientId: ${{ secrets.TRADUORA_CLIENT_ID }}" >> traduora-export.yaml
-          echo "clientSecret: ${{ secrets.TRADUORA_CLIENT_SECRET }}" >> traduora-export.yaml
-          echo "locales:" >> traduora-export.yaml
-          echo "  - ja" >> traduora-export.yaml
-          echo "  - en" >> traduora-export.yaml
-          echo "outputDir: messages" >> traduora-export.yaml
+          cat <<EOF > traduora-export.yaml
+          host: https://translations.oneterrace.jp
+          projectId: ${{ secrets.TRADUORA_PROJECT_ID }}
+          clientId: ${{ secrets.TRADUORA_CLIENT_ID }}
+          clientSecret: ${{ secrets.TRADUORA_CLIENT_SECRET }}
+          locales:
+            - ja
+            - en
+          outputDir: messages
+          EOF
 
       - name: Sync translations from Traduora
         env:
@@ -46,10 +48,6 @@ jobs:
         run: |
           pnpm dlx traduora-export
           ls -l messages/
-          cat messages/en.json | grep newMessage || echo "Key not found"
-
-      - name: Cleanup
-        run: rm traduora-export.yaml
 
       - name: Commit and push changes
         run: |
@@ -58,3 +56,6 @@ jobs:
           git add messages/
           git commit -m "chore: sync translations from Traduora" || echo "No changes"
           git push
+
+      - name: Cleanup
+        run: rm traduora-export.yaml
