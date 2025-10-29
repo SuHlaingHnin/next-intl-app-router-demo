@@ -1,0 +1,8 @@
+host: YOUR_HOST
+projectId: YOUR_PROJECT_ID
+clientId: YOUR_CLIENT_ID
+clientSecret: YOUR_CLIENT_SECRET
+locales:
+  - ja
+  - en
+outputDir: messages
