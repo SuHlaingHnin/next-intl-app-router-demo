@@ -33,6 +33,8 @@ jobs:
           TRADUORA_CLIENT_ID: ${{ secrets.TRADUORA_CLIENT_ID }}
           TRADUORA_CLIENT_SECRET: ${{ secrets.TRADUORA_CLIENT_SECRET }}
         run: pnpm dlx traduora-export
+          ls -l messages/
+          cat messages/en.json | grep newMessage
 
       - name: Commit and push changes
         run: |
