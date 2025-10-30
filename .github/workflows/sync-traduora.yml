@@ -2,8 +2,6 @@ name: Sync Traduora Translations
 
 on:
   workflow_dispatch: # Manual trigger from GitHub UI
-  schedule:
-    - cron: '0 9 * * *' # Optional: auto-run daily at 9 AM UTC
 
 jobs:
   sync:
